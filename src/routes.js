@@ -23,6 +23,8 @@ router.get('/details/:id', publicationController.getDetails);
 router.get('/edit/:id', isAuthenticated, publicationController.getEdit);
 router.post('/edit/:id', isAuthenticated, publicationController.postEdit);
 
+router.get('/delete/:id', isAuthenticated, publicationController.getDelete);
+
 //TODO: Routes
 
 module.exports = router;

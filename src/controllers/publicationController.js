@@ -19,7 +19,7 @@ exports.postCreate = async (req, res) => {
         return res.render('create', {error: errors[0]})
     }
 
-    res.render('gallery')
+    res.redirect('/galery')
 }
 
 exports.getGalery = async (req, res) =>{
@@ -59,4 +59,11 @@ exports.postEdit = async (req, res) =>{
     }
 
     res.redirect(`/details/${req.params.id}`)
+}
+
+exports.getDelete = async (req, res) =>{
+
+    await publicationService.deleteById(req.params.id);
+
+    res.redirect('/galery')
 }
