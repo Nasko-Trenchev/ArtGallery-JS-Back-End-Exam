@@ -6,4 +6,4 @@ exports.create = (data) => Publication.create(data);
 
 exports.getById = (id) => Publication.findById(id);
 
-exports.getAuthor = (publicationId) => Publication.find();
+exports.editById = (id, data) => Publication.findByIdAndUpdate(id, data);

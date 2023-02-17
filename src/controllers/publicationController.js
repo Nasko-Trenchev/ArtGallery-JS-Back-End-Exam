@@ -32,7 +32,31 @@ exports.getGalery = async (req, res) =>{
 exports.getDetails = async (req, res) =>{
 
     const publication = await publicationService.getById(req.params.id).populate('author').lean();
-    console.log(publication);
 
-    res.render('details', {publication})
+    const isOwner = req.user._id == publication.author._id;
+
+    res.render('details', {publication, isOwner})
+}
+
+exports.getEdit = async (req, res) =>{
+
+    const publication = await publicationService.getById(req.params.id).lean();
+
+    res.render('edit', {publication})
+}
+
+exports.postEdit = async (req, res) =>{
+
+    const {title, technique, artPicture, authenticity} = req.body;
+
+    try {
+        await publicationService.editById(req.params.id, {title, technique, artPicture, authenticity})
+    }
+    catch(err){
+        const errors = Object.keys(err.errors).map(key => err.errors[key].message)
+
+        return res.render('create', {error: errors[0]})
+    }
+
+    res.redirect(`/details/${req.params.id}`)
 }

@@ -6,3 +6,8 @@ exports.getHomePage = async (req, res) => {
 
     res.render('home', {publications});
 }
+
+exports.erorrPage = (req, res) =>{
+
+    res.render('404');
+}

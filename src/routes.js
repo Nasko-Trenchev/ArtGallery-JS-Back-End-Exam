@@ -6,6 +6,7 @@ const publicationController = require('./controllers/publicationController');
 const {isAuthenticated} = require('./middlewares/authMiddleware')
 
 router.get('/', homeController.getHomePage)
+router.get('/404', homeController.erorrPage);
 
 router.get('/login', authController.getLogin);
 router.post('/login', authController.postLogin);
@@ -18,6 +19,9 @@ router.post('/create', isAuthenticated, publicationController.postCreate);
 
 router.get('/galery', publicationController.getGalery);
 router.get('/details/:id', publicationController.getDetails);
+
+router.get('/edit/:id', isAuthenticated, publicationController.getEdit);
+router.post('/edit/:id', isAuthenticated, publicationController.postEdit);
 
 //TODO: Routes
 
