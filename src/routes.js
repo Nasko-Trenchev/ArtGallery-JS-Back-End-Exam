@@ -25,6 +25,8 @@ router.post('/edit/:id', isAuthenticated, publicationController.postEdit);
 
 router.get('/delete/:id', isAuthenticated, publicationController.getDelete);
 
+router.get('/share/:id', isAuthenticated, publicationController.sharePublication);
+
 //TODO: Routes
 
 module.exports = router;

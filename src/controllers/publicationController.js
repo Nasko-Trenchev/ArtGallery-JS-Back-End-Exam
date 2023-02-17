@@ -33,9 +33,12 @@ exports.getDetails = async (req, res) =>{
 
     const publication = await publicationService.getById(req.params.id).populate('author').lean();
 
-    const isOwner = req.user._id == publication.author._id;
+    console.log(publication)
 
-    res.render('details', {publication, isOwner})
+    const isOwner = req.user._id == publication.author._id;
+    const hasShared = publication.usersShared.some(id=> id == req.user._id);
+
+    res.render('details', {publication, isOwner, hasShared})
 }
 
 exports.getEdit = async (req, res) =>{
@@ -50,9 +53,11 @@ exports.postEdit = async (req, res) =>{
     const {title, technique, artPicture, authenticity} = req.body;
 
     try {
+
         await publicationService.editById(req.params.id, {title, technique, artPicture, authenticity})
     }
     catch(err){
+
         const errors = Object.keys(err.errors).map(key => err.errors[key].message)
 
         return res.render('create', {error: errors[0]})
@@ -66,4 +71,16 @@ exports.getDelete = async (req, res) =>{
     await publicationService.deleteById(req.params.id);
 
     res.redirect('/galery')
+}
+
+exports.sharePublication = async (req, res) =>{
+
+    try {
+        await publicationService.share(req.user._id, req.params.id)
+    }
+    catch(err){
+        console.log(err);
+    }
+
+    res.redirect(`/`)
 }

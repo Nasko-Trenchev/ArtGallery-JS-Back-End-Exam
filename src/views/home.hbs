@@ -1,4 +1,8 @@
-
+        {{#if error}}
+        <div class="error-box">
+            <p>{{error}}</p>
+        </div>
+        {{/if}}
 
             <section id="home-page">
                 <article class="auto-content">
@@ -12,13 +16,12 @@
                 <article class="home-page-content-publications">
 
                     <!--If there are publications in the database, show the following view for each created publication-->
-                    {{#if publications}}
-                    {{#each publications}}
+                    {{#if publicationWithShared}}
+                    {{#each publicationWithShared}}
                     <article class="content-publication">
                         <h1>Title: {{title}}</h1>
-
                         <!--If no one has shared the post yet, the number should be zero -->
-                        <p>Number of people shared the publication: 0</p>
+                        <p>Number of people shared the publication: {{shareCount}}</p>
                         <a href="/details/{{_id}}" class="image-details">View publication</a>
                     </article>
                     {{/each}}

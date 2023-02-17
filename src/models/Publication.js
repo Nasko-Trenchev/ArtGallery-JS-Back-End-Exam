@@ -4,15 +4,18 @@ const publicationShema = new mongoose.Schema({
 
     title:{
         type: String,
-        required: true
+        required: true,
+        minLength: 6
     },
     technique: {
         type: String,
-        required: true
+        required: true,
+        maxLength: 15
     },
     artPicture: {
         type: String,
-        required: true
+        required: true,
+        match: [/^https?:\/\//, "Invalid URL"]
     },
     authenticity: {
         type: String,

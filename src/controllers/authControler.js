@@ -28,9 +28,9 @@ exports.postLogin = async (req, res) =>{
      res.cookie('auth', token);
     }
     catch(err) {
-        //Error handling
-        //const errors = Object.keys(err.errors).map(key => err.errors[key].message)
-        //return res.render('login', {error: errors[0]})
+        
+        const errors = Object.keys(err.errors).map(key => err.errors[key].message)
+        return res.render('login', {error: errors[0]})
     }
     res.redirect('/');
 }
