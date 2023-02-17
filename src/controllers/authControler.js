@@ -7,7 +7,7 @@ exports.getLogin = (req, res) =>{
 
 exports.postLogin = async (req, res) =>{
 
-    const {email, password} = req.body;
+    const {username, password} = req.body;
 
     const user = await authService.findByUsername(username);
 
@@ -24,7 +24,7 @@ exports.postLogin = async (req, res) =>{
     }
 
     try {
-     const token = await authService.login(email, password);
+     const token = await authService.login(username, password);
      res.cookie('auth', token);
     }
     catch(err) {
@@ -42,9 +42,9 @@ exports.getRegister = (req, res) =>{
 
 exports.postRegister = async (req, res) =>{
    
-   const {username, email, password, repass} = req.body;
+   const {username, password, rePassword, address} = req.body;
 
-   const existingUser = await this.findByUsername(username);
+   const existingUser = await authService.findByUsername(username);
 
    if(existingUser){
 
@@ -52,13 +52,13 @@ exports.postRegister = async (req, res) =>{
 
     }
 
-    if(password !== repass){
+    if(password !== rePassword){
 
        return res.render('register', {error: "Password missmatch!"}) 
     }
 
     try {
-        const token = await authService.register(username, email, password, repass);
+        const token = await authService.register(username, address, password);
         res.cookie('auth', token);
     }
     catch(err){

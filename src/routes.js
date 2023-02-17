@@ -2,6 +2,8 @@ const router = require('express').Router();
 
 const homeController = require('./controllers/homeController');
 const authController = require('./controllers/authControler');
+const publicationController = require('./controllers/publicationController');
+const {isAuthenticated} = require('./middlewares/authMiddleware')
 
 router.get('/', homeController.getHomePage)
 
@@ -10,6 +12,12 @@ router.post('/login', authController.postLogin);
 router.get('/register', authController.getRegister);
 router.post('/register', authController.postRegister);
 router.get('/logout', authController.getLogout);
+
+router.get('/create', isAuthenticated, publicationController.getCreate);
+router.post('/create', isAuthenticated, publicationController.postCreate);
+
+router.get('/galery', publicationController.getGalery);
+router.get('/details/:id', publicationController.getDetails);
 
 //TODO: Routes
 

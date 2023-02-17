@@ -12,7 +12,6 @@ exports.authentication = async (req, res, next) =>{
             req.user = decodedToken;
             req.isAuthenticated = true;
             res.locals.isAuthenticated = true;
-            res.locals.email = decodedToken.email;
             res.locals.username = decodedToken.username;
             }
             catch(err){
@@ -27,7 +26,7 @@ exports.isAuthenticated = (req, res, next) =>{
 
     if(!req.isAuthenticated){
 
-        res.redirect('/login');
+        res.redirect('/404');
     }
     next();
 }

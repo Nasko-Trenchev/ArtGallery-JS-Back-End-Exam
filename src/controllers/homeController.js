@@ -1,6 +1,8 @@
+const publicationsService = require('../services/publicationService');
 
+exports.getHomePage = async (req, res) => {
 
-exports.getHomePage = (req, res) => {
+    const publications = await publicationsService.getAll().lean();
 
-    res.render('home');
+    res.render('home', {publications});
 }
